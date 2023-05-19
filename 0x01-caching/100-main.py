@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ 100-main """
-LFUCache = __import__('100-lfu_cache').LFUCache
+LFUCache = __import__('101-lfu_cache').LFUCache
 
 my_cache = LFUCache()
 my_cache.put("A", "Hello")
