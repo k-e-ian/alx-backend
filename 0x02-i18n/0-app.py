@@ -10,6 +10,10 @@ app = Flask(__name__, template_folder='templates')
 
 @app.route('/', strict_slashes=False)
 def index():
+    '''
+    render the 0-index.html template
+    returns: str: rendered HTML content
+    '''
     return render_template('0-index.html')
 
 
