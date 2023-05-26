@@ -2,10 +2,21 @@
 '''
 File: 0-app.py flask app
 '''
-
+from flask_babel import Babel
 from flask import Flask, render_template
 
 app = Flask(__name__, template_folder='templates')
+
+
+class Config:
+    LANGUAGES = ["en", "fr"]
+    BABEL_DEAFAULT_LOCALE = "en"
+    BABEL_DEFAULT_TIMEZONE = "UTC"
+
+
+app.config.from_object(Config)
+
+babel = Babel(app)
 
 
 @app.route('/', strict_slashes=False)
