@@ -36,8 +36,8 @@ def index():
     returns: str: rendered HTML content
     '''
     return render_template('3-index.html',
-                            title=gettext('home_title'),
-                            header=gettext('home_header'))
+                           title=gettext('home_title'),
+                           header=gettext('home_header'))
 
 
 if __name__ == '__main__':
