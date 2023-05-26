@@ -1,6 +1,6 @@
 #!/usr/bin/env python3.8
 '''
-File: 3-app.py flask app with babel and parametrize
+File: 4-app.py flask app with babel and parametrize and force locale
 '''
 from flask_babel import Babel, gettext
 from flask import Flask, render_template, request
@@ -26,9 +26,12 @@ babel = Babel(app)
 def get_locale():
     '''
     determine the best-matcing language from the supported ;ang'''
+    local = request.args.get('locale')
+    if local and local in app.config["LANGUAGES"]:
+        return local
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
-    '''babel.init_app(app, locale_selector=get_locale)'''
+    '''babel.init_app(app, locale_selector=get_locale'''
 
 
 @app.route('/', strict_slashes=False)
@@ -37,7 +40,7 @@ def index():
     render the 3-index.html template
     returns: str: rendered HTML content
     '''
-    return render_template('3-index.html',
+    return render_template('4-index.html',
                            title=gettext('home_title'),
                            header=gettext('home_header'))
 
