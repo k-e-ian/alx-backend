@@ -1,9 +1,10 @@
 #!/usr/bin/env python3.8
 '''
-File: 7-app.py
+File: app.py
 '''
 from flask_babel import Babel, gettext
 from flask import Flask, render_template, request, g
+from babel.dates import format_datetime
 from datetime import datetime
 import pytz
 
@@ -46,6 +47,10 @@ def before_request():
     global user func
     '''
     g.user = get_user()
+    utcNow = pytz.utc.localize(datetime.utcnow())
+    g.local_time = utcNow.astimezone(pytz.timezone(get_timezone()))
+    locale = get_locale()
+    g.local_time = format_datetime(g.local_time,locale=locale)
 
 
 @app.route('/', strict_slashes=False)
@@ -54,7 +59,7 @@ def index():
     render the 6-index.html template
     returns: str: rendered HTML content
     '''
-    return render_template('7-index.html',
+    return render_template('index.html',
                            title=gettext('home_title'),
                            header=gettext('home_header'))
 
@@ -90,11 +95,11 @@ def get_timezone():
     if g.user:
         time_z = g.user["timezone"]
         try:
-            pytz.timezone(tz)
+            pytz.timezone(time_z)
             return time_z
         except pytz.exceptions.UnknownTimeZoneError:
             pass
-    return pytz.timezone(app.config["BABEL_DEFAULT_TIMEZONE"])
+    return app.config["BABEL_DEFAULT_TIMEZONE"]
 
 
 if __name__ == '__main__':
